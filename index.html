@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>☠ ZODYAC PISING ☠</title>
+    <style>
+        * { margin: 0; padding: 0; }
+        body {
+            background: black;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+            height: 100vh;
+        }
+        /* ===== BACKGROUND GLITCH ===== */
+        #glitch {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                #ff0000 0%,
+                #00ff00 10%,
+                #0000ff 20%,
+                #ffff00 30%,
+                #ff00ff 40%,
+                #00ffff 50%
+            );
+            animation: glitch 0.05s infinite;
+            opacity: 0.3;
+            z-index: 0;
+        }
+        @keyframes glitch {
+            0% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(-5px, -10px) scale(1.05); }
+            50% { transform: translate(10px, 5px) scale(0.95); }
+            75% { transform: translate(-8px, 8px) scale(1.02); }
+            100% { transform: translate(5px, -5px) scale(1); }
+        }
+
+        /* ===== TEKS UTAMA ===== */
+        #main {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            color: #ff0000;
+            text-shadow: 0 0 20px #ff0000, 0 0 40px #ff0000;
+            animation: flicker 0.1s infinite;
+        }
+        @keyframes flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 100px;
+            animation: shake 0.1s infinite;
+        }
+        @keyframes shake {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-10px, 5px) rotate(-5deg); }
+            50% { transform: translate(10px, -5px) rotate(5deg); }
+            75% { transform: translate(-5px, -10px) rotate(-3deg); }
+            100% { transform: translate(5px, 10px) rotate(3deg); }
+        }
+
+        p {
+            font-size: 30px;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+            animation: blink 0.5s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ===== MATRIX RAIN ===== */
+        #matrix {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 2;
+            pointer-events: none;
+            color: #00ff00;
+            font-size: 20px;
+            overflow: hidden;
+            opacity: 0.5;
+        }
+
+        /* ===== POPUP BERJALAN ===== */
+        #popup {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255,0,0,0.9);
+            color: white;
+            padding: 20px;
+            z-index: 3;
+            animation: slideUp 0.5s ease;
+            text-align: center;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        #popup button {
+            background: white;
+            color: red;
+            border: none;
+            padding: 10px 30px;
+            font-size: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+        }
+
+        /* ===== RESPONSIF ===== */
+        @media (max-width: 600px) {
+            h1 { font-size: 50px; }
+            p { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================= -->
+<!-- 🔥 GLITCH BACKGROUND -->
+<!-- ============================================= -->
+<div id="glitch"></div>
+
+<!-- ============================================= -->
+<!-- 🟢 MATRIX RAIN -->
+<!-- ============================================= -->
+<div id="matrix"></div>
+
+<!-- ============================================= -->
+<!-- 💀 KONTEN UTAMA -->
+<!-- ============================================= -->
+<div id="main">
+    <h1>☠ ZODYAC ☠</h1>
+    <p>⚠️ KAMU TELAH DI HACK ⚠️</p>
+    <p style="font-size:20px; color:#ffff00;">😈 JANGAN PANIK, TAPI PANIKLAH 😈</p>
+    <p style="font-size:15px; color:#ff00ff; animation:none;">
+        ⚡ ZODYAC CRASH - LEVIATHAN EDITION ⚡
+    </p>
+</div>
+
+<!-- ============================================= -->
+<!-- 🟥 POPUP PALSU -->
+<!-- ============================================= -->
+<div id="popup">
+    <p style="color:white; font-size:24px;">⚠️ VIRUS DETEKSI! ⚠️</p>
+    <p style="color:#ffff00;">HP KAMU TERINFEKSI! HAPUS FILE SEGERA!</p>
+    <button onclick="closePopup()">OK, SAYA TAKUT!</button>
+    <button onclick="alert('😈 GAK BISA KELUAR!')">CANCEL</button>
+</div>
+
+<!-- ============================================= -->
+<!-- 🧠 JAVASCRIPT (SIASAT) -->
+<!-- ============================================= -->
+<script>
+    // =============================================
+    // 📌 MATRIX RAIN
+    // =============================================
+    const matrix = document.getElementById('matrix');
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+{}|:<>?~';
+    const columns = Math.floor(window.innerWidth / 20);
+    const drops = Array(columns).fill(0);
+
+    function drawMatrix() {
+        let output = '';
+        for (let i = 0; i < drops.length; i++) {
+            const char = chars[Math.floor(Math.random() * chars.length)];
+            output += char + ' ';
+            if (drops[i] > Math.random() * 30) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+        matrix.textContent = output;
+    }
+    setInterval(drawMatrix, 50);
+
+    // =============================================
+    // 📌 SCREEN FLASH
+    // =============================================
+    setInterval(() => {
+        document.body.style.backgroundColor = '#ff0000';
+        setTimeout(() => {
+            document.body.style.backgroundColor = 'black';
+        }, 100);
+    }, 2000);
+
+    // =============================================
+    // 📌 ALERT SPAM (BANYAK!)
+    // =============================================
+    const alerts = [
+        "⚠️ SISTEM TERINFEKSI!",
+        "🔥 HAPUS DATA SEGERA!",
+        "💀 KAMU TELAH DI HACK!",
+        "😈 ZODYAC MENGAWASI!",
+        "📸 KAMERA AKTIF!",
+        "🔒 DATA DIENKRIPSI!",
+        "☠️ TIDAK BISA KELUAR!"
+    ];
+
+    setInterval(() => {
+        alert(alerts[Math.floor(Math.random() * alerts.length)]);
+    }, 3000);
+
+    // =============================================
+    // 📌 PERTANYAAN TAK BERUJUNG
+    // =============================================
+    setInterval(() => {
+        if (confirm('😈 MAU KELUAR? KAMU YAKIN?')) {
+            alert('🤣 GAK BISA! SAYA YANG KONTROL!');
+        } else {
+            alert('😈 PINTER KAMU!');
+        }
+    }, 5000);
+
+    // =============================================
+    // 📌 REDIRECT ACAK
+    // =============================================
+    setInterval(() => {
+        const sites = [
+            'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+            'https://www.google.com',
+            'https://wa.me/6281234567890',
+        ];
+        if (Math.random() > 0.7) {
+            window.open(sites[Math.floor(Math.random() * sites.length)], '_blank');
+        }
+    }, 10000);
+
+    // =============================================
+    // 📌 GANTI FAVICON
+    // =============================================
+    const favicon = document.createElement('link');
+    favicon.rel = 'icon';
+    favicon.href = 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☠</text></svg>';
+    document.head.appendChild(favicon);
+
+    // =============================================
+    // 📌 FUNGSI TUTUP POPUP (PALSU)
+    // =============================================
+    function closePopup() {
+        document.getElementById('popup').style.display = 'none';
+        alert('😈 GAK SEGAMPANG ITU! VIRUS TETAP ADA!');
+        setTimeout(() => {
+            document.getElementById('popup').style.display = 'block';
+        }, 3000);
+    }
+
+    // =============================================
+    // 📌 GANTI BACKGROUND LAGU
+    // =============================================
+    console.log('%c☠ ZODYAC CRASH ☠', 'font-size:50px; color:red;');
+    console.log('%cKAMU TELAH DI HACK!', 'font-size:30px; color:yellow;');
+
+    // =============================================
+    // 📌 KIRIM DATA (SIMULASI)
+    // =============================================
+    setInterval(() => {
+        navigator.sendBeacon('/log', JSON.stringify({
+            time: new Date().toISOString(),
+            ua: navigator.userAgent,
+            screen: screen.width + 'x' + screen.height
+        }));
+    }, 30000);
+</script>
+
+</body>
+  </html>
