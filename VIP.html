@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MBR MLBB VIP</title>
+
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{
+ margin:0;min-height:100vh;display:grid;place-items:center;
+ background:#020611;color:#fff;overflow-x:hidden
+}
+body:before{
+ content:"";position:fixed;inset:-50%;z-index:-1;
+ background:radial-gradient(circle,#006eff44,transparent 30%),
+ radial-gradient(circle at 80%,#8a00ff44,transparent 30%);
+ animation:bg 8s infinite alternate
+}
+@keyframes bg{to{transform:translate(10%,8%) scale(1.2)}}
+
+.box{
+ width:min(430px,92%);padding:25px;
+ background:#07101ddd;border:1px solid #00eaff66;
+ border-radius:22px;box-shadow:0 0 35px #00cfff33;
+ animation:in .7s
+}
+@keyframes in{
+ from{opacity:0;transform:scale(.9)}
+}
+
+h1{text-align:center;color:#00eaff;text-shadow:0 0 20px #00eaff}
+small{display:block;text-align:center;color:#8899aa;margin-bottom:25px}
+label{font-size:12px;color:#9db0c5}
+
+input,select,button{
+ width:100%;padding:14px;margin:8px 0 15px;
+ border-radius:10px
+}
+input,select{
+ background:#02050c;color:#fff;
+ border:1px solid #00eaff55;outline:none
+}
+button{
+ border:0;color:#fff;font-weight:bold;cursor:pointer;
+ background:linear-gradient(90deg,#006eff,#00eaff,#873cff);
+ background-size:200%;animation:move 3s infinite
+}
+button:hover{transform:scale(1.02);box-shadow:0 0 20px #00eaff}
+@keyframes move{50%{background-position:100%}}
+
+#payment{
+ display:none;margin-top:10px;
+ animation:show .7s
+}
+@keyframes show{
+ from{opacity:0;transform:translateY(25px)}
+}
+
+.info{
+ padding:12px;background:#00eaff0d;
+ border-radius:10px;margin:10px 0 18px;
+ font-size:13px;line-height:1.8
+}
+.info b{color:#00eaff}
+
+.qris{
+ width:75%;margin:15px auto;padding:10px;
+ background:#fff;border-radius:15px;
+ box-shadow:0 0 30px #00eaff
+}
+.qris img{
+ display:block;width:100%;border-radius:8px
+}
+
+.wa{
+ background:linear-gradient(90deg,#00a85a,#00e676)
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>⚡ MBR VIP</h1>
+<small>MLBB PREMIUM ORDER</small>
+
+<label for="mlid">ID MOBILE LEGENDS</label>
+<input id="mlid" type="text" placeholder="Masukkan ID ML">
+
+<label for="paket">PILIH PAKET</label>
+<select id="paket">
+ <option value="MBR VIP 1|3000">1 MATCH — Rp3.000</option>
+ <option value="MBR VIP 2|10000">5 MATCH — Rp10.000</option>
+ <option value="MBR VIP 3|20000">END LIVE — Rp20.000</option>
+</select>
+
+<button type="button" id="payBtn">
+ LANJUT PEMBAYARAN
+</button>
+
+<div id="payment">
+
+ <div class="info">
+  ID ML : <b id="showId">-</b><br>
+  PAKET : <b id="showPaket">-</b><br>
+  TOTAL : <b id="showHarga">-</b>
+ </div>
+
+ <center>SCAN QRIS</center>
+
+ <div class="qris">
+  <img src="https://files.catbox.moe/d63p74.jpg" alt="QRIS Pembayaran">
+ </div>
+
+ <button type="button" class="wa" id="waBtn">
+  ✓ SUDAH BAYAR — CHAT WA OWNER
+ </button>
+
+</div>
+
+</div>
+
+<script>
+"use strict";
+
+const mlid = document.getElementById("mlid");
+const paket = document.getElementById("paket");
+const payBtn = document.getElementById("payBtn");
+const payment = document.getElementById("payment");
+const showId = document.getElementById("showId");
+const showPaket = document.getElementById("showPaket");
+const showHarga = document.getElementById("showHarga");
+const waBtn = document.getElementById("waBtn");
+
+let order = null;
+
+payBtn.addEventListener("click", function(){
+
+ const id = mlid.value.trim();
+
+ if(!id){
+  alert("Masukkan ID Mobile Legends terlebih dahulu!");
+  mlid.focus();
+  return;
+ }
+
+ const data = paket.value.split("|");
+ const namaPaket = data[0];
+ const harga = Number(data[1]);
+
+ order = {
+  id: id,
+  paket: namaPaket,
+  harga: harga
+ };
+
+ showId.textContent = order.id;
+ showPaket.textContent = order.paket;
+ showHarga.textContent =
+  "Rp" + order.harga.toLocaleString("id-ID");
+
+ payment.style.display = "block";
+
+ setTimeout(function(){
+  payment.scrollIntoView({
+   behavior:"smooth",
+   block:"start"
+  });
+ },100);
+
+});
+
+waBtn.addEventListener("click", function(){
+
+ if(!order){
+  alert("Buat pesanan terlebih dahulu!");
+  return;
+ }
+
+ const nomorOwner = "62881010360032";
+
+ const pesan =
+ "Halo Owner 👋%0A%0A" +
+ "Saya sudah melakukan pembayaran MBR MLBB VIP.%0A%0A" +
+ "ID ML: " + order.id + "%0A" +
+ "Paket: " + order.paket + "%0A" +
+ "Total: Rp" +
+ order.harga.toLocaleString("id-ID") +
+ "%0A%0AMohon diproses.";
+
+ const url =
+ "https://wa.me/" + nomorOwner +
+ "?text=" + pesan;
+
+ window.open(url,"_blank");
+
+});
+</script>
+
+</body>
+</html>
